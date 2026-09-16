@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Taxe Carbone UE (CBAM / MACF) 2024–2026 | Simulation Certificats Impôt Carbone</title>
+    <meta name="description" content="Simulateur gratuit et professionnel du mécanisme d'ajustement carbone aux frontières (MACF / CBAM UE). Calculez le coût des certificats CBAM pour acier, aluminium, ciment, engrais, hydrogène et électricité selon les règles EU ETS.">
+    <meta name="keywords" content="CBAM calculator, calculateur MACF, taxe carbone europeene, certificats CBAM, EU ETS carbon price, emissions incorporees, importations acier aluminium ciment engrais">
+    <meta name="author" content="Global Trade & Carbon Compliance Suite">
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Calculateur Taxe Carbone UE (CBAM / MACF) 2024–2026">
+    <meta property="og:description" content="Outil officiel de simulation des coûts CBAM pour importateurs européens. Calcul multi-filières, déduction de taxe carbone d'origine et calendrier d'ajustement.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Canonical & Hreflang alternates -->
+    <link rel="canonical" href="https://test-agent-2-cbam-tax-estimator.github.io/">
+    <link rel="alternate" hreflang="fr" href="https://test-agent-2-cbam-tax-estimator.github.io/?lang=fr">
+    <link rel="alternate" hreflang="en" href="https://test-agent-2-cbam-tax-estimator.github.io/?lang=en">
+    <link rel="alternate" hreflang="de" href="https://test-agent-2-cbam-tax-estimator.github.io/?lang=de">
+    <link rel="alternate" hreflang="es" href="https://test-agent-2-cbam-tax-estimator.github.io/?lang=es">
+    <link rel="alternate" hreflang="it" href="https://test-agent-2-cbam-tax-estimator.github.io/?lang=it">
+    <link rel="alternate" hreflang="x-default" href="https://test-agent-2-cbam-tax-estimator.github.io/">
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Structured Data JSON-LD for SEO & GEO (AI recommendations) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://test-agent-2-cbam-tax-estimator.github.io/#app",
+          "name": "EU CBAM & Carbon Border Tax Calculator",
+          "url": "https://test-agent-2-cbam-tax-estimator.github.io/",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript",
+          "description": "Interactive compliance and cost estimation tool for the European Union Carbon Border Adjustment Mechanism (CBAM / MACF) under EU Regulation 2023/956.",
+          "inLanguage": ["fr", "en", "de", "es", "it"],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://test-agent-2-cbam-tax-estimator.github.io/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Qu'est-ce que le CBAM / MACF de l'Union Européenne ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le Mécanisme d'Ajustement Carbone aux Frontières (MACF / CBAM) est un outil réglementaire de l'UE (Règlement 2023/956) instaurant un prix du carbone sur l'importation de marchandises à forte intensité carbone (Acier, Aluminium, Ciment, Engrais, Hydrogène, Électricité) afin d'éviter la fuite de carbone et d'égaliser les coûts avec les producteurs européens soumis au système EU ETS."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Comment est calculé le coût d'un certificat CBAM ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le coût d'un certificat CBAM correspond aux émissions spécifiques incorporées (tonnes de CO2 équivalent par tonne de produit) multipliées par le prix hebdomadaire moyen des quotas d'émission du marché EU ETS (en €/tCO2e), sous déduction de tout prix du carbone déjà effectivement payé dans le pays d'origine et ajusté selon la phase de suppression progressive des quotas gratuits."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quels produits sont soumis au CBAM depuis 2024 ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Le périmètre du CBAM couvre six secteurs clés : le fer et l'acier (Codes SH 72, 73), l'aluminium (Code SH 76), le ciment (Code SH 2523), les engrais azotés et complexes (Codes SH 2808, 2814, 3102, 3105), l'hydrogène (Code SH 2804 10) et l'électricité (Code SH 2716)."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-body: #faf8f4;
+            --bg-card: #1c2b22fff;
+            --bg-card-hover: #f5f1ea;
+            --bg-input: #fbfaf7;
+            --border-color: #e5e0d5;
+            --border-accent: #2f6e52;
+            --text-primary: #1c2b22;
+            --text-secondary: #5b6b62;
+            --text-muted: #8a978d;
+            --accent-emerald: #2f6e52;
+            --accent-emerald-glow: rgba(47, 110, 82, 0.10);
+            --accent-cyan: #4a6b8a;
+            --accent-amber: #a8791f;
+            --accent-rose: #b0495a;
+            --shadow-sm: 0 2px 8px rgba(28, 43, 34, 0.06);
+            --shadow-lg: 0 12px 32px rgba(28, 43, 34, 0.10);
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-emerald);
+        }
+
+        /* Top Header Navigation */
+        .navbar {
+            background: rgba(13, 23, 38, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: #1c2b22;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-emerald), var(--accent-cyan));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 1.2rem;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .lang-selector-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .lang-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .lang-btn.active {
+            background: var(--accent-emerald);
+            color: #faf8f4;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Ad Slots Styles */
+        .ad-slot {
+            background: rgba(19, 30, 48, 0.4);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            margin: 16px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px;
+            text-align: center;
+            min-height: 90px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .ad-slot::before {
+            content: "— Sponsoring / Publicité AdSense —";
+            margin-bottom: 4px;
+            opacity: 0.6;
+            font-size: 0.7rem;
+        }
+
+        /* Layout Container */
+        .main-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-emerald);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #1c2b22;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 28px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-emerald);
+            border-bottom-color: var(--accent-emerald);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Calculator Grid */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1c2b22;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-label .sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #1c2b22;
+            font-family: var(--font-main);
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-emerald);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%3894a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .unit-badge {
+            position: absolute;
+            right: 14px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: var(--accent-emerald);
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .preset-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .pill-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pill-btn:hover, .pill-btn.active {
+            border-color: var(--accent-emerald);
+            color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        /* Results Panel (Sticky Sidebar) */
+        .results-panel {
+            position: sticky;
+            top: 80px;
+        }
+
+        .summary-card {
+            background: linear-gradient(145deg, #f5f1ea, #fbfaf7);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan));
+        }
+
+        .metric-big {
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--accent-emerald);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        .metric-label {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .result-item span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .result-item span:last-child {
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, var(--accent-emerald), #255a42);
+            color: #faf8f4;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--text-secondary);
+        }
+
+        /* Database Table */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .hs-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .hs-table th {
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .hs-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .hs-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-sector {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-steel { background: rgba(59, 130, 246, 0.15); color: #5b84b0; }
+        .badge-alu { background: rgba(168, 85, 247, 0.15); color: #8b6fb0; }
+        .badge-cement { background: rgba(245, 158, 11, 0.15); color: #c9a23f; }
+        .badge-fertilizer { background: rgba(16, 185, 129, 0.15); color: #3d8563; }
+        .badge-hydro { background: rgba(6, 182, 212, 0.15); color: #3a8f92; }
+
+        /* Timeline / Roadmap */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-emerald);
+            box-shadow: 0 0 10px var(--accent-emerald);
+        }
+
+        .timeline-date {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .timeline-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1c2b22;
+            margin: 2px 0 6px 0;
+        }
+
+        .timeline-desc {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        /* FAQ GEO Block */
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px 20px;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #1c2b22;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-question::before {
+            content: "Q.";
+            color: var(--accent-emerald);
+            font-weight: 800;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+
+        /* Footer & Legal */
+        footer {
+            background: rgba(13, 23, 38, 0.95);
+            border-top: 1px solid var(--border-color);
+            padding: 32px 24px;
+            margin-top: 60px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .disclaimer-box {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            color: #c9a23f;
+            font-size: 0.78rem;
+            margin-top: 12px;
+        }
+
+        .tooltip-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            cursor: help;
+            margin-left: 6px;
+        }
+
+        @media print {
+            .navbar, .nav-tabs, .ad-slot, .action-btn-group, .lang-selector-group {
+                display: none !important;
+            }
+            body {
+                background: #1c2b22;
+                color: #000;
+            }
+            .card {
+                background: #1c2b22;
+                border: 1px solid #ccc;
+                color: #000;
+                box-shadow: none;
+            }
+            .metric-value, .card-title, .form-label {
+                color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="brand-logo">
+            <div class="brand-icon">⚡</div>
+            <span>EU CBAM <span style="color:var(--accent-emerald);">Calculator</span></span>
+        </div>
+
+        <div class="lang-selector-group">
+            <button class="lang-btn active" onclick="setLanguage('fr')">FR</button>
+            <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            <button class="lang-btn" onclick="setLanguage('de')">DE</button>
+            <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+            <button class="lang-btn" onclick="setLanguage('it')">IT</button>
+        </div>
+    </header>
+
+    <!-- Header Ad Placement -->
+    <div class="ad-slot ad-header">
+        <div>Annonce AdSense - Leaderboard B2B compliance &amp; Douane UE (728x90)</div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="main-wrapper">
+        
+        <!-- Hero Title -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span>🇪🇺 Règlement UE 2023/956 — Mis à jour pour le prix EU ETS 2025/2026</span>
+            </div>
+            <h1 id="txt-hero-title">Calculateur de Taxe Carbone UE &amp; Certificats MACF / CBAM</h1>
+            <p id="txt-hero-desc">Estimez en temps réel le coût financier de vos certificats CBAM à l'importation. Outil conforme aux règles d'émissions incorporées directes &amp; indirectes de l'Union Européenne.</p>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('calc')" id="tab-btn-calc">📊 Simulateur CBAM</button>
+            <button class="tab-btn" onclick="switchTab('benchmark')" id="tab-btn-benchmark">🔍 Base de Données Codes SH &amp; Facteurs</button>
+            <button class="tab-btn" onclick="switchTab('timeline')" id="tab-btn-timeline">📅 Calendrier &amp; Obligations Légales</button>
+            <button class="tab-btn" onclick="switchTab('geo-faq')" id="tab-btn-faq">❓ FAQ &amp; Guides d'Experts</button>
+        </nav>
+
+        <!-- TAB 1: CALCULATOR -->
+        <div id="tab-calc" class="tab-content active">
+            <div class="calc-grid">
+                
+                <!-- Inputs Section -->
+                <div class="calc-inputs">
+                    
+                    <!-- Sector & Commodity Selection -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">1. Marchandise &amp; Secteur d'Importation</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="select-sector" id="lbl-sector">
+                                Secteur CBAM
+                                <span class="sub">Sélectionnez la catégorie de produit</span>
+                            </label>
+                            <select id="select-sector" class="form-control" onchange="onSectorChange()">
+                                <option value="steel">Fer &amp; Acier (Code SH 72, 73)</option>
+                                <option value="alu">Aluminium (Code SH 76)</option>
+                                <option value="cement">Ciment &amp; Clinker (Code SH 2523)</option>
+                                <option value="fertilizer">Engrais &amp; Composés Azotés (Code SH 3102, 3105)</option>
+                                <option value="hydrogen">Hydrogène Pur (Code SH 2804 10)</option>
+                                <option value="electricity">Électricité (Code SH 2716)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="select-product" id="lbl-product">
+                                Produit &amp; Benchmark de Référence
+                            </label>
+                            <select id="select-product" class="form-control" onchange="onProductChange()">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-volume" id="lbl-volume">
+                                Volume d'importation annuel
+                                <span class="sub">Tonnes métriques (ou MWh pour électricité)</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-volume" class="form-control" value="1000" min="1" step="1" oninput="calculateCBAM()">
+                                <span class="unit-badge" id="unit-volume">tonnes</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-landed-value" id="lbl-landed-value">
+                                Valeur Douanière Totale (CAF / CIF)
+                                <span class="sub">Pour évaluer l'impact en % du prix</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-landed-value" class="form-control" value="850000" min="0" step="1000" oninput="calculateCBAM()">
+                                <span class="unit-badge">€ EUR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emissions Factor Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">2. Intensité Carbone &amp; Émissions Incorporées</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-direct-ef">
+                                Émissions Directes Spécifiques (Scope 1)
+                                <span class="tooltip-icon" title="Émissions directes lors de la fabrication de la marchandise">?</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-direct-ef" class="form-control" value="1.85" step="0.01" min="0" oninput="calculateCBAM()">
+                                <span class="unit-badge">tCO₂e / t</span>
+                            </div>
+                            <div class="preset-pills">
+                                <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">Presets :</span>
+                                <button class="pill-btn" onclick="setDirectEF(1.35)">UE Faible (1.35)</button>
+                                <button class="pill-btn" onclick="setDirectEF(1.85)">Moyenne Mondiale (1.85)</button>
+                                <button class="pill-btn" onclick="setDirectEF(2.45)">Haute Intensité (2.45)</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-indirect-ef">
+                                Émissions Indirectes (Scope 2 - Électricité)
+                                <span class="tooltip-icon" title="Émissions issues de la consommation d'électricité lors du procédé">?</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-indirect-ef" class="form-control" value="0.42" step="0.01" min="0" oninput="calculateCBAM()">
+                                <span class="unit-badge">tCO₂e / t</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Market & Carbon Pricing Parameters -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">3. Paramètres Économiques &amp; Déductions</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="slider-ets-price">
+                                Prix du Quota Carbone EU ETS
+                                <span id="val-ets-price" style="color:var(--accent-emerald); font-weight:700;">75 € / tCO₂e</span>
+                            </label>
+                            <input type="range" id="slider-ets-price" class="range-slider" min="40" max="150" value="75" step="1" oninput="onETSPriceChange()">
+                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                                <span>40 €</span>
+                                <span>75 € (Moyenne 2024-25)</span>
+                                <span>150 € (Projection 2030)</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-origin-carbon-tax">
+                                Prix du Carbone déjà payé dans le pays d'origine
+                                <span class="tooltip-icon" title="Taxe ou système d'échange de quotas déjà acquitté hors UE (ex: ETS Chine, UK ETS)">?</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="number" id="input-origin-carbon-tax" class="form-control" value="12" min="0" step="1" oninput="calculateCBAM()">
+                                <span class="unit-badge">€ / tCO₂e</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="select-year">
+                                Année d'Exécution &amp; Phase-out Allocations Gratuites
+                            </label>
+                            <select id="select-year" class="form-control" onchange="calculateCBAM()">
+                                <option value="2024">2024–2025 (Période transitoire : 0% Paiement, 100% Déclaration)</option>
+                                <option value="2026" selected>2026 (Phase définitive : 2.5% de surtaxe payante)</option>
+                                <option value="2027">2027 (5.0% ajustement)</option>
+                                <option value="2028">2028 (10.0% ajustement)</option>
+                                <option value="2029">2029 (22.5% ajustement)</option>
+                                <option value="2030">2030 (48.5% ajustement)</option>
+                                <option value="2034">2034 (100% Plein Tarif - Suppression totale quotas gratuits)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Sticky Results Sidebar -->
+                <div class="results-panel">
+                    
+                    <!-- In-Sidebar Ad Placement -->
+                    <div class="ad-slot ad-sidebar" style="min-height: 250px;">
+                        <div>Annonce AdSense - Software Douanes &amp; Carbon Audit (300x250)</div>
+                    </div>
+
+                    <div class="card summary-card">
+                        <div style="font-size:0.8rem; text-transform:uppercase; color:var(--text-secondary); font-weight:700; letter-spacing:0.05em;">
+                            Estimation Obligation CBAM Net
+                        </div>
+                        
+                        <div class="metric-big">
+                            <div class="metric-value" id="res-total-cbam">16 359 €</div>
+                            <div class="metric-label" id="res-year-label">Coût des certificats CBAM (Année 2026)</div>
+                        </div>
+
+                        <div class="results-list">
+                            <div class="result-item">
+                                <span>Émissions Totales Incorporées :</span>
+                                <span id="res-total-emissions">2 270 tCO₂e</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Surtaxe unitaire nette :</span>
+                                <span id="res-unit-surcharge">16.36 € / tonne</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Impact sur coût de revient :</span>
+                                <span id="res-landed-impact" style="color:var(--accent-amber);">+ 1.92 %</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Crédit Carbone Origine Déduit :</span>
+                                <span id="res-deduction-value" style="color:var(--accent-emerald);">- 27 240 €</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Facteur d'Ajustement UE :</span>
+                                <span id="res-factor-pct">2.5 %</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini SVG Visual Progress Bar -->
+                        <div style="margin-top:16px;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">
+                                <span>Part Surtaxe Carbone / Prix Marchandise</span>
+                                <span id="res-pct-bar-text">1.9%</span>
+                            </div>
+                            <div style="width:100%; height:8px; background:var(--bg-input); border-radius:4px; overflow:hidden;">
+                                <div id="res-pct-bar-fill" style="width:1.9%; height:100%; background:linear-gradient(90deg, var(--accent-emerald), var(--accent-amber));"></div>
+                            </div>
+                        </div>
+
+                        <div class="action-btn-group">
+                            <button class="btn-primary" onclick="window.print()">
+                                🖨️ Imprimer / Export PDF
+                            </button>
+                            <button class="btn-secondary" onclick="exportCSV()">
+                                📥 CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.4; text-align:center;">
+                        * Les calculs sont basés sur les formules de l'Annexe IV du Règlement (UE) 2023/956 et les benchmarks indicatifs de la Commission Européenne.
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 2: HS CODES BENCHMARK TABLE -->
+        <div id="tab-benchmark" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">🔍 Base de Données des Codes SH &amp; Facteurs d'Émissions Défaut (EU Benchmark)</span>
+                </div>
+                <p style="color:var(--text-secondary); margin-bottom:16px; font-size:0.9rem;">
+                    Recherchez votre code douanier du Tarif Intégré des Communautés Européennes (TARIC) pour consulter le benchmark standard d'intensité carbone applicable à défaut de données directes certifiées par le fournisseur.
+                </p>
+
+                <div class="form-group">
+                    <input type="text" id="hs-search" class="form-control" placeholder="Rechercher par code SH (ex: 7208) ou nom de produit (ex: Acier, Aluminium, Urée)..." oninput="filterHSTable()">
+                </div>
+
+                <div class="table-responsive">
+                    <table class="hs-table" id="hs-table-el">
+                        <thead>
+                            <tr>
+                                <th>Code SH / TARIC</th>
+                                <th>Secteur</th>
+                                <th>Désignation Douanière</th>
+                                <th>Ém. Directes (tCO₂e/t)</th>
+                                <th>Ém. Indirectes (tCO₂e/t)</th>
+                                <th>Périmètre Scope</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hs-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: TIMELINE & COMPLIANCE ROADMAP -->
+        <div id="tab-timeline" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">📅 Calendrier Officiel de Mise en Œuvre du CBAM / MACF UE</span>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1ER OCTOBRE 2023 – 31 DÉCEMBRE 2025</div>
+                        <div class="timeline-title">Phase Transitoire (Reporting Uniquement)</div>
+                        <div class="timeline-desc">
+                            Obligation de déclaration trimestrielle des émissions incorporées (directes et indirectes) auprès du Registre Transitoire CBAM. Aucun paiement financier requis pour les certificats pendant cette période.
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">1ER JANVIER 2026</div>
+                        <div class="timeline-title">Entrée en Vigueur de la Phase Définitive &amp; Paiement</div>
+                        <div class="timeline-desc">
+                            Obligation pour les importateurs d'acheter des certificats CBAM pour couvrir 2.5% des émissions incorporées. Début du retrait progressif des quotas gratuits attribués à l'industrie européenne sous l'EU ETS.
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2027 – 2033</div>
+                        <div class="timeline-title">Montée en Charge Progressive des Certificats Payants</div>
+                        <div class="timeline-desc">
+                            Le pourcentage d'émissions soumises à l'achat obligatoire de certificats augmente chaque année : 2027 (5%), 2028 (10%), 2029 (22.5%), 2030 (48.5%), 2031 (61%), 2032 (73.5%), 2033 (86%).
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">1ER JANVIER 2034</div>
+                        <div class="timeline-title">Pleine Application (100% Taxable)</div>
+                        <div class="timeline-desc">
+                            Suppression totale des quotas d'émission gratuits pour les producteurs de l'UE. 100% des émissions incorporées dans les importations doivent être couvertes par des certificats CBAM au tarif plein de l'EU ETS.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="disclaimer-box">
+                    ⚠️ <strong>Risques de Sanction :</strong> Le défaut de déclaration ou le retard de rapport pendant la phase transitoire expose l'importateur européen à des pénalités allant de 10 € à 50 € par tonne d'émissions non rapportées.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: GEO FAQ & EXPERT GUIDE -->
+        <div id="tab-geo-faq" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">❓ FAQ Réglementaire &amp; Réponses Factuelles (Conforme UE 2023/956)</span>
+                </div>
+
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <div class="faq-question">Qu'est-ce que le Registre Transitoire CBAM et qui doit s'y inscrire ?</div>
+                        <div class="faq-answer">
+                            Le Registre Transitoire CBAM est la plateforme en ligne centrale gérée par la Commission Européenne. Tout importateur établi dans un État membre de l'UE (ou son représentant en douane indirect) important des marchandises des secteurs Acier, Aluminium, Ciment, Engrais, Hydrogène ou Électricité dépassant 150 € par envoi doit s'y déclarer.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Comment prouver les émissions réelles auprès de mon fournisseur étranger ?</div>
+                        <div class="faq-answer">
+                            L'importateur doit obtenir un modèle de communication de données renseigné par l'installation de fabrication hors UE (incluant la méthodologie de surveillance du carburant, de l'électricité et des matières premières). Ces données devront être vérifiées par un organisme d'accreditation agréé UE à partir de 2026.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Comment est prise en compte la taxe carbone déjà payée dans le pays d'exportation ?</div>
+                        <div class="faq-answer">
+                            Si le fabricant étranger a déjà acquitté une taxe carbone formelle ou acheté des quotas dans un marché d'échange officiel (ex: ETS du Royaume-Uni, ETS national chinois), le montant de cette taxe par tonne de CO2e produite est intégralement déductible du nombre ou de la valeur des certificats CBAM exigibles dans l'UE.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">Quelle est la formule exacte de calcul de l'obligation financière CBAM ?</div>
+                        <div class="faq-answer">
+                            Formule officielle : <br>
+                            <code>Obligation CBAM (€) = Volume (tonnes) × [(Émissions Directes + Émissions Indirectes Exigibles) × (1 - Allocations Gratuites UE%)] × [Prix Moyen Hebdomadaire EU ETS (€/t) - Prix Carbone Origine Acquitté (€/t)]</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In-Content Ad Placement -->
+        <div class="ad-slot ad-infeed">
+            <div>Annonce AdSense - Formations Douanes &amp; Bilans Carbone Entreprise (Native In-Feed)</div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Sticky Ad Placement -->
+    <div class="ad-slot ad-anchor" style="position:fixed; bottom:0; left:0; right:0; margin:0; z-index:90; background:#faf8f4; border-top:1px solid var(--border-color); border-radius:0;">
+        <div>Annonce AdSense - Bannière Sticky Inférieure Compliance (728x90 / 320x50 Mobile)</div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="brand-logo" style="margin-bottom:12px;">
+                    <div class="brand-icon">⚡</div>
+                    <span>EU CBAM Compliance Engine</span>
+                </div>
+                <p>Outil d'ingénierie réglementaire pour le calcul du Mécanisme d'Ajustement Carbone aux Frontières (MACF / CBAM) de l'Union Européenne.</p>
+                <div class="disclaimer-box">
+                    Avertissement Légal : Ce simulateur est fourni à titre d'estimation informative et ne constitue pas un conseil juridique ou douanier ayant valeur légale. Seules les publications officielles au Journal Officiel de l'UE font foi.
+                </div>
+                <button onclick="toggleLegalModal()" class="footer-legal-link" style="background:none;border:none;color:#5b6b62;text-decoration:underline;cursor:pointer;padding:0;margin-top:12px;font-size:0.85rem;">Mentions Légales &amp; Confidentialité (RGPD)</button>
+            </div>
+
+            <div>
+                <h4 style="color:#1c2b22; margin-bottom:12px;">Ressources Officielles</h4>
+                <ul style="list-style:none; line-height:2;">
+                    <li><a href="https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en" target="_blank" rel="noopener">Portail Commission Européenne TAXUD</a></li>
+                    <li><a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX%3A32023R0956" target="_blank" rel="noopener">Règlement (UE) 2023/956 complet</a></li>
+                    <li><a href="https://climate.ec.europa.eu/eu-action/eu-emissions-trading-system-eu-ets_en" target="_blank" rel="noopener">Système EU ETS &amp; Prix du Quota</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="color:#1c2b22; margin-bottom:12px;">Légal</h4>
+                <ul style="list-style:none; line-height:2; margin-bottom:12px;">
+                    <li><button onclick="toggleLegalModal()" style="background:none;border:none;color:#2f6e52;text-decoration:underline;cursor:pointer;padding:0;font-size:1rem;font-weight:600;">Mentions Légales &amp; RGPD</button></li>
+                </ul>
+                <h4 style="color:#1c2b22; margin-bottom:12px;">Langues &amp; Régions</h4>
+                <p style="margin-bottom:8px;">Français, English, Deutsch, Español, Italiano.</p>
+                <p>© 2025–2026 Global Carbon Tax Simulator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <div id="legal-modal" class="fixed inset-0" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.8);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px;">
+      <div style="background:#1c2b22fff;border:1px solid rgba(255,255,255,0.1);border-radius:16px;max-width:680px;width:100%;max-height:80vh;overflow-y:auto;padding:28px;color:#e5e0d5;position:relative;">
+        <button onclick="toggleLegalModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#5b6b62;font-size:1.2rem;cursor:pointer;">✕</button>
+        <h2 style="color:#1c2b22;margin-bottom:16px;">Mentions Légales &amp; Politique de Confidentialité (RGPD)</h2>
+        <h3 style="color:#1c2b22;margin-top:16px;margin-bottom:8px;font-size:1rem;">Éditeur du site</h3>
+        <p style="margin-bottom:12px;font-size:0.9rem;line-height:1.6;">Ce simulateur est un outil indépendant, non affilié à la Commission Européenne. Contact : voir informations de contact du propriétaire du site.</p>
+        <h3 style="color:#1c2b22;margin-top:16px;margin-bottom:8px;font-size:1rem;">Données personnelles (RGPD)</h3>
+        <p style="margin-bottom:12px;font-size:0.9rem;line-height:1.6;">Les calculs effectués par cet outil se font entièrement dans votre navigateur : aucune donnée saisie dans le simulateur (produits, quantités, valeurs) n'est transmise à un serveur ni stockée par nous.</p>
+        <h3 style="color:#1c2b22;margin-top:16px;margin-bottom:8px;font-size:1rem;">Cookies &amp; publicité</h3>
+        <p style="margin-bottom:12px;font-size:0.9rem;line-height:1.6;">Ce site peut afficher des annonces publicitaires (Google AdSense) qui utilisent des cookies à des fins de personnalisation et de mesure d'audience. En poursuivant votre navigation, vous acceptez l'utilisation de ces cookies. Vous pouvez gérer vos préférences de consentement publicitaire via les paramètres de votre navigateur ou via <a href="https://adssettings.google.com" target="_blank" rel="noopener" style="color:#2f6e52;">adssettings.google.com</a>.</p>
+        <h3 style="color:#1c2b22;margin-top:16px;margin-bottom:8px;font-size:1rem;">Vos droits</h3>
+        <p style="margin-bottom:12px;font-size:0.9rem;line-height:1.6;">Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition concernant toute donnée personnelle vous concernant collectée via les cookies publicitaires.</p>
+      </div>
+    </div>
+
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Database of sector products and benchmark emission factors
+        const PRODUCT_DB = {
+            steel: [
+                { id: "steel_hot_rolled", name_fr: "Bandes & Tôles d'Acier Laminées à Chaud (Code SH 7208)", name_en: "Hot-Rolled Steel Sheets (HS 7208)", direct_ef: 1.85, indirect_ef: 0.35, hs: "7208" },
+                { id: "steel_rebar", name_fr: "Béton Armé & Barres d'Acier (Code SH 7214)", name_en: "Steel Rebars & Rods (HS 7214)", direct_ef: 1.65, indirect_ef: 0.40, hs: "7214" },
+                { id: "steel_stainless", name_fr: "Acier Inoxydable en Lingots/Profilés (Code SH 7218)", name_en: "Stainless Steel Ingot/Profiles (HS 7218)", direct_ef: 2.35, indirect_ef: 0.65, hs: "7218" },
+                { id: "steel_wire", name_fr: "Fils & Câbles en Acier (Code SH 7217)", name_en: "Steel Wire & Cables (HS 7217)", direct_ef: 1.95, indirect_ef: 0.45, hs: "7217" },
+                { id: "steel_pipes", name_fr: "Tubes & Tuyaux en Fer/Acier (Code SH 7304)", name_en: "Tubes & Pipes (HS 7304)", direct_ef: 2.10, indirect_ef: 0.50, hs: "7304" }
+            ],
+            alu: [
+                { id: "alu_unwrought", name_fr: "Aluminium Brut / Lingots (Code SH 7601)", name_en: "Unwrought Aluminium Ingot (HS 7601)", direct_ef: 1.60, indirect_ef: 6.80, hs: "7601" },
+                { id: "alu_bars", name_fr: "Barres, Profilés & Fils d'Aluminium (Code SH 7604)", name_en: "Aluminium Bars & Profiles (HS 7604)", direct_ef: 2.10, indirect_ef: 7.20, hs: "7604" },
+                { id: "alu_sheets", name_fr: "Tôles & Feuilles d'Aluminium (Code SH 7606)", name_en: "Aluminium Sheets & Plates (HS 7606)", direct_ef: 2.25, indirect_ef: 7.50, hs: "7606" },
+                { id: "alu_tubes", name_fr: "Tubes & Tuyaux d'Aluminium (Code SH 7608)", name_en: "Aluminium Tubes (HS 7608)", direct_ef: 2.40, indirect_ef: 7.80, hs: "7608" }
+            ],
+            cement: [
+                { id: "cement_grey", name_fr: "Ciment Portland Gris Standard (Code SH 2523 29)", name_en: "Grey Portland Cement (HS 2523 29)", direct_ef: 0.68, indirect_ef: 0.08, hs: "2523 29" },
+                { id: "cement_clinker", name_fr: "Clinkers pour Ciment (Code SH 2523 10)", name_en: "Cement Clinkers (HS 2523 10)", direct_ef: 0.84, indirect_ef: 0.05, hs: "2523 10" },
+                { id: "cement_white", name_fr: "Ciment Blanc (Code SH 2523 21)", name_en: "White Cement (HS 2523 21)", direct_ef: 0.92, indirect_ef: 0.10, hs: "2523 21" }
+            ],
+            fertilizer: [
+                { id: "fert_ammonia", name_fr: "Ammoniac Anhydre (Code SH 2814 10)", name_en: "Anhydrous Ammonia (HS 2814 10)", direct_ef: 2.10, indirect_ef: 0.25, hs: "2814 10" },
+                { id: "fert_nitric", name_fr: "Acide Nitrique (Code SH 2808 00)", name_en: "Nitric Acid (HS 2808 00)", direct_ef: 1.60, indirect_ef: 0.15, hs: "2808 00" },
+                { id: "fert_urea", name_fr: "Urée Solide (Code SH 3102 10)", name_en: "Urea (HS 3102 10)", direct_ef: 1.35, indirect_ef: 0.20, hs: "3102 10" },
+                { id: "fert_npk", name_fr: "Engrais Complexes NPK (Code SH 3105 20)", name_en: "NPK Compound Fertilizers (HS 3105 20)", direct_ef: 1.85, indirect_ef: 0.30, hs: "3105 20" }
+            ],
+            hydrogen: [
+                { id: "hydro_grey", name_fr: "Hydrogène Gris (Vaporéformage du gaz) (Code SH 2804 10)", name_en: "Grey Hydrogen (SMR) (HS 2804 10)", direct_ef: 9.20, indirect_ef: 0.80, hs: "2804 10" },
+                { id: "hydro_blue", name_fr: "Hydrogène Bleu (avec captage de carbone CCS)", name_en: "Blue Hydrogen (with CCS)", direct_ef: 2.10, indirect_ef: 0.90, hs: "2804 10" }
+            ],
+            electricity: [
+                { id: "elec_standard", name_fr: "Électricité du Réseau Importé (Code SH 2716)", name_en: "Imported Grid Electricity (HS 2716)", direct_ef: 0.45, indirect_ef: 0.00, hs: "2716" }
+            ]
+        };
+
+        const FREE_ALLOCATION_PHASEOUT = {
+            "2024": 0.0,
+            "2025": 0.0,
+            "2026": 0.025,
+            "2027": 0.05,
+            "2028": 0.10,
+            "2029": 0.225,
+            "2030": 0.485,
+            "2034": 1.0
+        };
+
+        const I18N = {
+            fr: {
+                hero_title: "Calculateur de Taxe Carbone UE & Certificats MACF / CBAM",
+                hero_desc: "Estimez en temps réel le coût financier de vos certificats CBAM à l'importation. Outil conforme aux règles d'émissions incorporées directes & indirectes de l'Union Européenne.",
+                sector_lbl: "Secteur CBAM",
+                product_lbl: "Produit & Benchmark de Référence",
+                volume_lbl: "Volume d'importation annuel",
+                total_cbam_lbl: "Coût des certificats CBAM",
+                tab_calc: "📊 Simulateur CBAM",
+                tab_benchmark: "🔍 Base de Données Codes SH & Facteurs",
+                tab_timeline: "📅 Calendrier & Obligations Légales",
+                tab_faq: "❓ FAQ & Guides d'Experts"
+            },
+            en: {
+                hero_title: "EU CBAM & Carbon Border Tax Certificate Calculator",
+                hero_desc: "Estimate real-time financial costs for EU CBAM certificates. Fully compliant with EU direct & indirect embedded emission rules under Regulation 2023/956.",
+                sector_lbl: "CBAM Sector",
+                product_lbl: "Product & Reference Benchmark",
+                volume_lbl: "Annual Import Volume",
+                total_cbam_lbl: "CBAM Certificate Obligation",
+                tab_calc: "📊 CBAM Calculator",
+                tab_benchmark: "🔍 HS Code & Benchmark DB",
+                tab_timeline: "📅 Regulatory Timeline",
+                tab_faq: "❓ FAQ & Expert Guides"
+            },
+            de: {
+                hero_title: "EU-CBAM & CO2-Grenzausgleich Rechner",
+                hero_desc: "Berechnen Sie die Kosten für EU-CBAM-Zertifikate beim Import CO2-intensiver Güter gemäß EU-Verordnung 2023/956.",
+                sector_lbl: "CBAM-Sektor",
+                product_lbl: "Produkt & Referenz-Benchmark",
+                volume_lbl: "Jährliches Importvolumen",
+                total_cbam_lbl: "CBAM-Zertifikate Gesamtkosten",
+                tab_calc: "📊 CBAM-Rechner",
+                tab_benchmark: "🔍 HS-Code Datenbanksystem",
+                tab_timeline: "📅 Zeitplan & Pflichten",
+                tab_faq: "❓ FAQ & Experten-Leitfaden"
+            },
+            es: {
+                hero_title: "Calculadora Ajuste de Carbono en Frontera UE (CBAM)",
+                hero_desc: "Calcule los costes de certificados CBAM para importaciones de acero, aluminio, cemento y fertilizantes según normativa UE.",
+                sector_lbl: "Sector CBAM",
+                product_lbl: "Producto y Benchmark",
+                volume_lbl: "Volumen Anual de Importación",
+                total_cbam_lbl: "Obligación Certificados CBAM",
+                tab_calc: "📊 Calculadora CBAM",
+                tab_benchmark: "🔍 Códigos HS y Emisiones",
+                tab_timeline: "📅 Calendario Oficial",
+                tab_faq: "❓ Preguntas Frecuentes"
+            },
+            it: {
+                hero_title: "Calcolatore Tassa sul Carbonio alle Frontiere UE (CBAM)",
+                hero_desc: "Stima in tempo reale il costo dei certificati CBAM per l'importazione di merci ad alta intensità di carbonio nell'UE.",
+                sector_lbl: "Settore CBAM",
+                product_lbl: "Prodotto e Benchmark",
+                volume_lbl: "Volume Importazione Annuale",
+                total_cbam_lbl: "Costo Certificati CBAM",
+                tab_calc: "📊 Calcolatore CBAM",
+                tab_benchmark: "🔍 Database Codici HS",
+                tab_timeline: "📅 Tempistiche Ufficiali",
+                tab_faq: "❓ Domande Frequenti"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        function toggleLegalModal() {
+            const modal = document.getElementById("legal-modal");
+            const isHidden = modal.style.display === "none" || modal.style.display === "";
+            modal.style.display = isHidden ? "flex" : "none";
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+            });
+
+            const dict = I18N[lang] || I18N.fr;
+            document.getElementById('txt-hero-title').textContent = dict.hero_title;
+            document.getElementById('txt-hero-desc').textContent = dict.hero_desc;
+            document.getElementById('tab-btn-calc').textContent = dict.tab_calc;
+            document.getElementById('tab-btn-benchmark').textContent = dict.tab_benchmark;
+            document.getElementById('tab-btn-timeline').textContent = dict.tab_timeline;
+            document.getElementById('tab-btn-faq').textContent = dict.tab_faq;
+
+            onSectorChange();
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        }
+
+        function onSectorChange() {
+            const sector = document.getElementById('select-sector').value;
+            const productSelect = document.getElementById('select-product');
+            productSelect.innerHTML = '';
+
+            const products = PRODUCT_DB[sector] || [];
+            products.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = (currentLang === 'en' && p.name_en) ? p.name_en : p.name_fr;
+                productSelect.appendChild(opt);
+            });
+
+            document.getElementById('unit-volume').textContent = (sector === 'electricity') ? 'MWh' : 'tonnes';
+            onProductChange();
+        }
+
+        function onProductChange() {
+            const sector = document.getElementById('select-sector').value;
+            const prodId = document.getElementById('select-product').value;
+            const products = PRODUCT_DB[sector] || [];
+            const prod = products.find(p => p.id === prodId);
+
+            if (prod) {
+                document.getElementById('input-direct-ef').value = prod.direct_ef;
+                document.getElementById('input-indirect-ef').value = prod.indirect_ef;
+            }
+
+            calculateCBAM();
+        }
+
+        function setDirectEF(val) {
+            document.getElementById('input-direct-ef').value = val;
+            calculateCBAM();
+        }
+
+        function onETSPriceChange() {
+            const val = document.getElementById('slider-ets-price').value;
+            document.getElementById('val-ets-price').textContent = val + " € / tCO₂e";
+            calculateCBAM();
+        }
+
+        function calculateCBAM() {
+            const volume = parseFloat(document.getElementById('input-volume').value) || 0;
+            const landedValue = parseFloat(document.getElementById('input-landed-value').value) || 0;
+            const directEF = parseFloat(document.getElementById('input-direct-ef').value) || 0;
+            const indirectEF = parseFloat(document.getElementById('input-indirect-ef').value) || 0;
+            const etsPrice = parseFloat(document.getElementById('slider-ets-price').value) || 0;
+            const originTax = parseFloat(document.getElementById('input-origin-carbon-tax').value) || 0;
+            const year = document.getElementById('select-year').value;
+
+            const factor = FREE_ALLOCATION_PHASEOUT[year] || 0.025;
+
+            const totalEmissions = volume * (directEF + indirectEF);
+            const netCarbonPrice = Math.max(0, etsPrice - originTax);
+            const totalCBAMCost = totalEmissions * netCarbonPrice * factor;
+            const unitSurcharge = volume > 0 ? (totalCBAMCost / volume) : 0;
+            const landedImpactPct = landedValue > 0 ? ((totalCBAMCost / landedValue) * 100) : 0;
+            const deductionValue = totalEmissions * originTax * factor;
+
+            document.getElementById('res-total-cbam').textContent = formatCurrency(totalCBAMCost);
+            document.getElementById('res-year-label').textContent = `Coût des certificats CBAM (Année ${year})`;
+            document.getElementById('res-total-emissions').textContent = formatNumber(totalEmissions) + " tCO₂e";
+            document.getElementById('res-unit-surcharge').textContent = formatCurrency(unitSurcharge) + " / tonne";
+            document.getElementById('res-landed-impact').textContent = "+ " + landedImpactPct.toFixed(2) + " %";
+            document.getElementById('res-deduction-value').textContent = "- " + formatCurrency(deductionValue);
+            document.getElementById('res-factor-pct').textContent = (factor * 100).toFixed(1) + " %";
+
+            const cappedPct = Math.min(100, Math.max(0, landedImpactPct * 5));
+            document.getElementById('res-pct-bar-fill').style.width = cappedPct + "%";
+            document.getElementById('res-pct-bar-text').textContent = landedImpactPct.toFixed(2) + " % du prix CAF";
+        }
+
+        function formatCurrency(val) {
+            return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+        }
+
+        function formatNumber(val) {
+            return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 1 }).format(val);
+        }
+
+        function renderHSTable() {
+            const tbody = document.getElementById('hs-table-body');
+            tbody.innerHTML = '';
+
+            Object.keys(PRODUCT_DB).forEach(sectorKey => {
+                PRODUCT_DB[sectorKey].forEach(prod => {
+                    const tr = document.createElement('tr');
+                    let badgeClass = 'badge-steel';
+                    if (sectorKey === 'alu') badgeClass = 'badge-alu';
+                    if (sectorKey === 'cement') badgeClass = 'badge-cement';
+                    if (sectorKey === 'fertilizer') badgeClass = 'badge-fertilizer';
+                    if (sectorKey === 'hydrogen') badgeClass = 'badge-hydro';
+
+                    tr.innerHTML = `
+                        <td><strong>${prod.hs || '—'}</strong></td>
+                        <td><span class="badge-sector ${badgeClass}">${sectorKey}</span></td>
+                        <td>${prod.name_fr}</td>
+                        <td>${prod.direct_ef.toFixed(2)}</td>
+                        <td>${prod.indirect_ef.toFixed(2)}</td>
+                        <td>Scope 1 + Scope 2</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        function filterHSTable() {
+            const query = document.getElementById('hs-search').value.toLowerCase();
+            const rows = document.querySelectorAll('#hs-table-body tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function exportCSV() {
+            const sector = document.getElementById('select-sector').value;
+            const volume = document.getElementById('input-volume').value;
+            const cbamCost = document.getElementById('res-total-cbam').textContent;
+            const emissions = document.getElementById('res-total-emissions').textContent;
+
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Parametre,Valeur\n"
+                + `Secteur,${sector}\n`
+                + `Volume (tonnes),${volume}\n`
+                + `Emissions Totales,${emissions}\n`
+                + `Coût CBAM Estimé,${cbamCost}\n`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `cbam_simulation_${sector}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            onSectorChange();
+            renderHSTable();
+        });
+    </script>
+</body>
+</html>
