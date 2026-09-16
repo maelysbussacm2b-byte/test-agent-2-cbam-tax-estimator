@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://maelysbussacm2b-byte.github.io/test-agent-2-cbam-tax-estimator/sitemap.xml
